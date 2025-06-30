@@ -57,7 +57,12 @@ app.post('/assign-ai', (req, res) => {
   assignedAI.key = req.body.geminiKey;
   assignedAI.systemPrompt = req.body.systemPrompt || '';
   assignedAI.waToken = req.body.waToken || '';
-  console.log('✅ AI Assigned:', assignedAI.systemPrompt);
+
+  console.log('✅ AI Assigned:');
+  console.log('  System Prompt:', assignedAI.systemPrompt);
+  console.log('  Gemini Key:', assignedAI.key ? '[RECEIVED]' : '[MISSING]');
+  console.log('  WhatsApp Token:', assignedAI.waToken ? '[RECEIVED]' : '[MISSING]');
+
   res.sendStatus(200);
 });
 
@@ -172,7 +177,9 @@ async function sendAutoReply(to, text, token) {
   }
 }
 
-// Start backend
-server.listen(3000, () => {
-  console.log('🚀 Server running on http://localhost:3000');
+// Use Render's assigned port or default to 3000
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
